@@ -9,9 +9,13 @@ class Heph < Formula
   depends_on "uv"
 
   def install
-    system "uv", "venv", libexec, "--python", formula_opt_bin("python@3.13") / "python3.13"
-    system "uv", "pip", "install", "--python", libexec / "bin/python", "./packages/heph"
-    (bin / "heph").write_env_script libexec / "bin/heph", PATH: "#{libexec}/bin:$PATH"
+    venv = var / "venv"
+    rm_rf venv
+    system "uv", "venv", venv, "--python", formula_opt_bin("python@3.13") / "python3.13"
+    system "uv", "build", "--all-packages", "--wheel", "--out-dir", buildpath / "dist"
+    wheels = Dir["#{buildpath}/dist/*.whl"]
+    system "uv", "pip", "install", "--python", venv / "bin/python", *wheels
+    (bin / "heph").write_env_script venv / "bin/heph", PATH: "#{venv}/bin:$PATH"
   end
 
   test do
