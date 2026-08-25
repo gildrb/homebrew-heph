@@ -9,7 +9,7 @@ class Heph < Formula
   depends_on "uv"
 
   def install
-    venv = var / "venv"
+    venv = var / "heph" / "venv"
     rm_r venv if venv.exist?
     system "uv", "venv", venv, "--python", formula_opt_bin("python@3.13") / "python3.13"
     system "uv", "build", "--all-packages", "--wheel", "--out-dir", buildpath / "dist"
