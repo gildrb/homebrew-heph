@@ -1,8 +1,7 @@
 # Homebrew Heph
 
-Install Heph from source through Homebrew:
+Install Heph directly from the tap:
 
 ```sh
-brew tap gildrb/heph
-brew install heph
+brew install gildrb/heph/heph
 ```
